@@ -55,20 +55,41 @@ function insertImages(numHairImages) {
       
       var image = document.createElement("div");
       image.className = "screenHairImage";
+      image.setAttribute("id", "id_sera9");
 
       image.style.width = w + "px";
       image.style.height = h + "px";
       image.style.left = imageObject.leftOffset + "px";
       image.style.top = imageObject.topOffset + "px";
-
+      image.style.transform = "rotate(90deg)";
       var absoluteUrl = chrome.runtime.getURL(imageObject.url);
       image.style.backgroundImage = "url('" + absoluteUrl + "')";
 
       document.body.appendChild(image);
+      myMove(image);
     }
     
     if (needUpdate) chrome.storage.sync.set( { "hairImages": hairImages } );
   });
+}
+
+function myMove(obj) {
+  let id = null;
+  const elem = document.getElementById('id_sera9');
+  
+
+  let pos = 0;
+  clearInterval(id);
+  id = setInterval(frame, 1);
+  function frame() {
+    if (pos == 1000) {
+      clearInterval(id);
+    } else {
+      pos++; 
+      elem.style.top = pos + "px"; 
+      elem.style.left = pos + "px"; 
+    }
+  }
 }
 
 function randomOffset() {
